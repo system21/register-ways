@@ -72,17 +72,23 @@ map.on('draw:created', function(e) {
         $('#b' + bloque).append('<input type="text" name="tipo_geometry" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + string_cordenadas + '"  style="width: 150px" readonly>')
         bloque = bloque + 1;
     } else if (type === 'circle') {
-        console.log(layer._getLngRadius());
-        
-        console.log(layer.toGeoJSON().geometry);
-         //$('#circle').append('<div class="well" id="b' + bloque + '"></div>');
-         
-         //ST_Buffer(ST_GeomFromText('POINT(100 90)'), 50)
-        
+        /* console.log(layer._getLngRadius());
+         console.log(layer.toGeoJSON().geometry);
+         */
+        $('#circle').append('<div class="well" id="b' + bloque + '"></div>');
+        var circle = layer.toGeoJSON().geometry.coordinates[0] + ' ' + layer.toGeoJSON().geometry.coordinates[1] + '/' + layer._getLngRadius();
+        console.log(circle);
+        $('#b' + bloque).append('<input type="text" name="tipo_geometry" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + circle + '"  style="width: 150px" readonly>')
+        bloque = bloque + 1;
+
+        //
+
+
+
     } else if (type === 'polygon') {
         var cordenadas = layer.toGeoJSON().geometry.coordinates[0];
         $('#polygon').append('<div class="well" id="b' + bloque + '"></div>');
-        console.log(cordenadas)
+        // console.log(cordenadas)
         var string_cordenadas = null;
         $.each(cordenadas, function(key, value) {
             if (string_cordenadas === null) {
@@ -94,12 +100,37 @@ map.on('draw:created', function(e) {
             console.log(string_cordenadas)
         });
 
-        var polygon = 'POLYGON((' + string_cordenadas + '))';
+        var polygon = string_cordenadas;
         $('#b' + bloque).append('<input type="text" name="tipo_geometry" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + polygon + '"  style="width: 150px" readonly>')
         bloque = bloque + 1;
 
+    } else if (type === 'polyline') {
+
+        $('#polyline').append('<div class="well" id="b' + bloque + '"></div>');
+
+        var cordenadas = layer.toGeoJSON().geometry.coordinates;
+        var string_cordenadas = null;
+
+        $.each(cordenadas, function(key, value) {
+            cordenadas[key]
+            if (string_cordenadas === null) {
+                string_cordenadas = string_cordenadas + cordenadas[key][0] + ' ' + cordenadas[key][1];
+            } else {
+                string_cordenadas = string_cordenadas + ',' + cordenadas[key][0] + ' ' + cordenadas[key][1];
+            }
+
+            // console.log(string_cordenadas)
+        });
+
+        var polyline = string_cordenadas;
+        $('#b' + bloque).append('<input type="text" name="tipo_geometry" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + polyline + '"  style="width: 150px" readonly>')
+        bloque = bloque + 1;
+
+
+
     }
 
+    $("#num_objects").val(bloque);
 
     drawnItems.addLayer(layer);
 });

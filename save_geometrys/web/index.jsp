@@ -60,10 +60,12 @@
 
                 </div>
 
-                <div id="line" class="well">
+                <div id="polyline" class="well">
 
                 </div>
-
+                <div id="objects">
+                    <input type="text" id="num_objects" name="num_objects" value="0"/>
+                </div>
                 <button class="btn btn-primary" type="submit">Registrar</button>
             </form>
         </div>

@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,16 +52,26 @@ public class DaoGeometry {
         String geom = "";
         try {
             if (b.getTipo().equals("rectangle")) {
+                geom = "'POLYGON((" + b.getCordenadas() + "))'";
+            } else if (b.getTipo().equals("circle")) {
+                geom = b.getCordenadas();
+                int indice = geom.indexOf("/");
+                String cordenadas = geom.substring(0, indice);
+                String radio = geom.substring(indice + 1, geom.length());
+                geom = "ST_Buffer(ST_GeomFromText('POINT(" + cordenadas + ")'), " + radio + ")";
+                // System.out.println(geom);
+            } else if (b.getTipo().equals("polygon")) {
+                geom = "'POLYGON((" + b.getCordenadas() + "))'";
+            } else if (b.getTipo().equals("polyline")) {
 
-                geom = "POLYGON((" + b.getCordenadas() + "))";
-            }else{
-            geom=b.getCordenadas();
+                geom = "'LINESTRING(" + b.getCordenadas() + ")'";
             }
-            String sql = "INSERT INTO geometries VALUES ('" + b.getId() + "','" + b.getTipo() + "', '" + geom + "');";
-            
+
+            String sql = "INSERT INTO geometries VALUES ('" + b.getId() + "','" + b.getTipo() + "', " + geom + ");";
+
             System.out.println("SQ=======================:" + sql);
             pstmt = cn.prepareStatement(sql);
-          //  pstmt.executeUpdate();
+            //  pstmt.executeUpdate();
             pstmt.executeQuery();
             cn.commit();
         } catch (SQLException ex) {
