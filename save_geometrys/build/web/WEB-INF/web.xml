@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>org.postgresql.Driver</param-value>
+    </context-param>
+    <context-param>
+        <param-name>url</param-name>
+        <param-value>jdbc:postgresql://localhost:5432/dbgeometry</param-value>
+    </context-param>
+    <context-param>
+        <param-name>username</param-name>
+        <param-value>postgres</param-value>
+    </context-param>
+    <context-param>
+        <param-name>pwname</param-name>
+        <param-value>1234</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Ssave_polygon</servlet-name>
+        <servlet-class>servlets.Ssave_polygon</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SGeometry</servlet-name>
+        <servlet-class>servlets.SGeometry</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Ssave_polygon</servlet-name>
+        <url-pattern>/Ssave_polygon</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SGeometry</servlet-name>
+        <url-pattern>/SGeometry</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>

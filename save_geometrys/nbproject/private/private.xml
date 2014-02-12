@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/web/index.jsp</file>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/src/java/datasource/BDConnecion.java</file>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/src/java/manager/ManagerGeometry.java</file>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/src/java/dao/DaoGeometry.java</file>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/src/java/bean/BGeometry.java</file>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/src/java/bean/BPoint.java</file>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/web/libs/spec/expect.js</file>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/web/js/app.js</file>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/web/WEB-INF/web.xml</file>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/src/java/servlets/SGeometry.java</file>
+            <file>file:/home/ruben/Dropbox/webpages/save_geometrys/web/css/style.css</file>
+        </group>
+    </open-files>
+</project-private>

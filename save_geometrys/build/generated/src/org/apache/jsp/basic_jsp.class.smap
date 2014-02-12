@@ -1,0 +1,12 @@
+SMAP
+basic_jsp.java
+JSP
+*S JSP
+*F
++ 0 basic.jsp
+basic.jsp
+*L
+1,50:44
+51:94,3
+52,21:97
+*E
