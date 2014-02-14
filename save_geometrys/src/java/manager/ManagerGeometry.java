@@ -31,10 +31,10 @@ public class ManagerGeometry {
         return ultimo;
     }
 
-    public void insert_geometry(BGeometry bGeometry) {
+    public void insert_geometry(List<BGeometry> list) {
         DaoGeometry daopolygon = new DaoGeometry(cn);
 
-        daopolygon.insert_geometry(bGeometry);
+        daopolygon.insert_geometry(list);
 
     }
 

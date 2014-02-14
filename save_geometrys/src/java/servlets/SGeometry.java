@@ -10,6 +10,8 @@ import bean.BPoint;
 import datasource.BDConnecion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,29 +35,27 @@ public class SGeometry extends HttpServlet {
         ServletContext ctx = this.getServletConfig().getServletContext();
         BDConnecion conexion = new BDConnecion(ctx);
         managergeometry = new ManagerGeometry(conexion);
-
-        BGeometry bGeometry = new BGeometry();
+        List<BGeometry> list = new LinkedList<BGeometry>();
 
         try {
+            int id = managergeometry.optener_ultimo();
 
-            String id = managergeometry.optener_ultimo() + "g";
-            String tipo = request.getParameter("tipo_geometry");
-            
-            
-            for (int i = 0; i < 10; i++) {
-        
-                
+            int num_objects = Integer.parseInt(request.getParameter("num_objects"));
+
+            for (int i = 0; i < num_objects; i++) {
+                BGeometry bGeometry = new BGeometry();
+
+                String tipo = request.getParameter("tipo_geometry" + i);
+                String coordenadas = request.getParameter("geometry" + i);
+
+                bGeometry.setId((id + i) + "g");
+                bGeometry.setTipo(tipo);
+                bGeometry.setCordenadas(coordenadas);
+                list.add(bGeometry);
+
             }
-            
-            
-            
-            String coordenadas = request.getParameter("geometry0");
-            System.out.println("cordenada" + request.getParameter("geometry0"));
-            bGeometry.setId(id);
-            bGeometry.setTipo(tipo);
-            bGeometry.setCordenadas(coordenadas);
 
-            managergeometry.insert_geometry(bGeometry);
+            managergeometry.insert_geometry(list);
             response.sendRedirect("index.jsp");
 
         } finally {

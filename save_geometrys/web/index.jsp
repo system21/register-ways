@@ -49,31 +49,52 @@
         <div id="map" ></div>
         <div id="info">
             <form class="form" method="post"  action="<%=request.getContextPath()%>/SGeometry">
-
-                <div id="rectangle" class="well">
-
-                </div>
-                <div id="polygon" class="well">
-
-                </div>
-                <div id="circle" class="well">
-
+                <div id="numero_objects">
+                    <h5>Objetos a registrar :<span id="num_objects_label"> 0 </span></h5>
+                    <input type="text" id="num_objects" name="num_objects" value="0" style="display: none"/>
                 </div>
 
-                <div id="polyline" class="well">
-
-                </div>
                 <div id="objects">
-                    <input type="text" id="num_objects" name="num_objects" value="0"/>
+                    <table class="table table-striped table-bordered table-condensed" >
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Objeto</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="objects_table">
+
+                        </tbody>
+                    </table>
                 </div>
+                <div id="marker" class="well" style="display: none" >
+
+                </div>
+                
+                <div id="rectangle" class="well" style="display: none" >
+
+                </div>
+                <div id="polygon" class="well" style="display: none">
+
+                </div>
+                <div id="circle" class="well" style="display: none">
+
+                </div>
+
+                <div id="polyline" class="well" style="display: none">
+
+                </div>
+
                 <button class="btn btn-primary" type="submit">Registrar</button>
+                <a id="cancelar" class="btn btn-default" href="index.jsp">Cancelar</a>
             </form>
         </div>
 
 
 
 
-        <button id="changeColor">Rectangle -> Blue</button>
+
 
         <script src="js/app.js"></script>
     </body>

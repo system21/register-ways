@@ -38,7 +38,7 @@ var drawControl = new L.Control.Draw({
                 color: '#662d91'
             }
         },
-        marker: false
+        marker: true
     },
     edit: {
         featureGroup: drawnItems,
@@ -48,17 +48,96 @@ var drawControl = new L.Control.Draw({
 map.addControl(drawControl);
 
 map.on('draw:created', function(e) {
-    var type = e.layerType,
-            layer = e.layer;
+    var type = e.layerType;
+    var layer = e.layer;
+    save_object(type, layer);
+    drawnItems.addLayer(layer);
+});
 
-    console.log(type);
+map.on('draw:edited', function(e) {
+    var layers = e.layers;
+    var countOfEditedLayers = 0;
+    layers.eachLayer(function(layer) {
+        countOfEditedLayers++;
+        modific_object(layer);
+    });
+    console.log("Edited " + countOfEditedLayers + " layers");
+});
+
+function modific_object(layer) {
+    console.log('Objeto Modificado:' + layer.options.id);
+    var id = parseInt(layer.options.id.replace("b", ""));
+    layer.toGeoJSON().geometry.coordinates[0];
+
+    var type = $('[name=tipo_geometry' + id + ']').val();
+
+
     if (type === 'marker') {
-        layer.bindPopup('A popup!');
+
+        layer.bindPopup('Soy un marker modificado!');
+        var longitud = layer.toGeoJSON().geometry.coordinates[0];
+        var latitud = layer.toGeoJSON().geometry.coordinates[1];
+        var marker = longitud + ' ' + latitud;
+        $('[name=geometry' + id + ']').val(marker);
+
+
+    } else if (type === 'rectangle') {
+        var cordenadas = layer.toGeoJSON().geometry.coordinates[0];
+        var rectangle = null;
+        $.each(cordenadas, function(key, value) {
+            if (rectangle === null) {
+                rectangle = rectangle + cordenadas[key][0] + ' ' + cordenadas[key][1];
+            } else {
+                rectangle = rectangle + ',' + cordenadas[key][0] + ' ' + cordenadas[key][1];
+            }
+        });
+        $('[name=geometry' + id + ']').val(rectangle);
+    } else if (type === 'circle') {
+        var circle = layer.toGeoJSON().geometry.coordinates[0] + ' ' + layer.toGeoJSON().geometry.coordinates[1] + '/' + layer._getLngRadius();
+        $('[name=geometry' + id + ']').val(circle);
     }
+    else if (type === 'polygon') {
+        var cordenadas = layer.toGeoJSON().geometry.coordinates[0];
+        var polygon = null;
+        $.each(cordenadas, function(key, value) {
+            if (polygon === null) {
+                polygon = polygon + cordenadas[key][0] + ' ' + cordenadas[key][1];
+            } else {
+                polygon = polygon + ',' + cordenadas[key][0] + ' ' + cordenadas[key][1];
+            }
+        });
+        $('[name=geometry' + id + ']').val(polygon);
+    } else if (type === 'polyline') {
 
+        var cordenadas = layer.toGeoJSON().geometry.coordinates;
+        var polyline = null;
+        $.each(cordenadas, function(key, value) {
+
+            if (polyline === null) {
+                polyline = polyline + cordenadas[key][0] + ' ' + cordenadas[key][1];
+            } else {
+                polyline = polyline + ',' + cordenadas[key][0] + ' ' + cordenadas[key][1];
+            }
+        });
+        $('[name=geometry' + id + ']').val(polyline);
+    }
+}
+;
+function save_object(type, layer) {
     layer_to_safe.push(layer);
+    layer.options['id'] = 'b' + bloque;//va a trabajar como un id del objeto creado
+    if (type === 'marker') {
 
-    if (type === 'rectangle') {
+        layer.bindPopup('Soy un marker!');
+        var longitud = layer.toGeoJSON().geometry.coordinates[0];
+        var latitud = layer.toGeoJSON().geometry.coordinates[1];
+        $('#marker').append('<div class="well" id="b' + bloque + '"></div>');
+
+        var marker = longitud + ' ' + latitud;
+        console.log(marker);
+        $('#b' + bloque).append('<input type="text" name="tipo_geometry' + bloque + '" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + marker + '"   readonly>')
+        bloque = bloque + 1;
+    } else if (type === 'rectangle') {
         var cordenadas = layer.toGeoJSON().geometry.coordinates[0];
         var string_cordenadas = null;
         $('#rectangle').append('<div class="well" id="b' + bloque + '"></div>');
@@ -69,22 +148,22 @@ map.on('draw:created', function(e) {
                 string_cordenadas = string_cordenadas + ',' + cordenadas[key][0] + ' ' + cordenadas[key][1];
             }
         });
-        $('#b' + bloque).append('<input type="text" name="tipo_geometry" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + string_cordenadas + '"  style="width: 150px" readonly>')
+        var rectangle = string_cordenadas;
+        $('#b' + bloque).append('<input type="text" name="tipo_geometry' + bloque + '" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + rectangle + '"   readonly>')
         bloque = bloque + 1;
+
+
+
+
     } else if (type === 'circle') {
         /* console.log(layer._getLngRadius());
          console.log(layer.toGeoJSON().geometry);
          */
         $('#circle').append('<div class="well" id="b' + bloque + '"></div>');
         var circle = layer.toGeoJSON().geometry.coordinates[0] + ' ' + layer.toGeoJSON().geometry.coordinates[1] + '/' + layer._getLngRadius();
-        console.log(circle);
-        $('#b' + bloque).append('<input type="text" name="tipo_geometry" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + circle + '"  style="width: 150px" readonly>')
+        //console.log(circle);
+        $('#b' + bloque).append('<input type="text" name="tipo_geometry' + bloque + '" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + circle + '"   readonly>')
         bloque = bloque + 1;
-
-        //
-
-
-
     } else if (type === 'polygon') {
         var cordenadas = layer.toGeoJSON().geometry.coordinates[0];
         $('#polygon').append('<div class="well" id="b' + bloque + '"></div>');
@@ -97,11 +176,11 @@ map.on('draw:created', function(e) {
                 string_cordenadas = string_cordenadas + ',' + cordenadas[key][0] + ' ' + cordenadas[key][1];
             }
 
-            console.log(string_cordenadas)
+            //console.log(string_cordenadas)
         });
 
         var polygon = string_cordenadas;
-        $('#b' + bloque).append('<input type="text" name="tipo_geometry" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + polygon + '"  style="width: 150px" readonly>')
+        $('#b' + bloque).append('<input type="text" name="tipo_geometry' + bloque + '" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + polygon + '"   readonly>')
         bloque = bloque + 1;
 
     } else if (type === 'polyline') {
@@ -118,57 +197,24 @@ map.on('draw:created', function(e) {
             } else {
                 string_cordenadas = string_cordenadas + ',' + cordenadas[key][0] + ' ' + cordenadas[key][1];
             }
-
-            // console.log(string_cordenadas)
         });
 
         var polyline = string_cordenadas;
-        $('#b' + bloque).append('<input type="text" name="tipo_geometry" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + polyline + '"  style="width: 150px" readonly>')
+
+        $('#b' + bloque).append('<input type="text" name="tipo_geometry' + bloque + '" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + polyline + '"   readonly>')
         bloque = bloque + 1;
-
-
-
     }
-
+    $('#objects_table').append('<tr><td>' + bloque + '</td><td>' + type + '</td></tr>')
+    $("#num_objects_label").text(bloque);
     $("#num_objects").val(bloque);
-
-    drawnItems.addLayer(layer);
-});
-
-map.on('draw:edited', function(e) {
-    var layers = e.layers;
-
-    $.each(layer_to_safe, function(key, value) {
-        console.log(layer_to_safe[key].toGeoJSON());
-    });
-
-    getevent();
-
-});
-
-L.DomUtil.get('changeColor').onclick = function() {
-    drawControl.setDrawingOptions({
-        rectangle: {
-            shapeOptions: {
-                color: '#004a80'
-            }
-        }
-    });
-};
-
-
-function getevent(layers) {
-
-    //	console.log(layer_to_safe);
-
-
-
+    console.log('Objeto creado:' + layer.options.id);
 }
 ;
 
-
 $(document).on('ready', function() {
-
-
-
+    /*
+     $("#cancelar").click(function (){
+     
+     });
+     */
 });

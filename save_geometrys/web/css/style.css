@@ -2,12 +2,16 @@
     #map { position:absolute; top:0; bottom:0; width:100%; }
 
 #info{
-	width: 400px;
-	height: 600px;
+	width: 250px;
+	height: auto;
 	display: block;
 	position: absolute;
 	z-index: 9;
-	left: 0px;
-	bottom:  0px;
-	background: #eee;
+	left: 5px;
+	top:  5px;
+	background: #fff;
+        padding: 10px;
+}
+.leaflet-control-zoom{
+    left: 250px;
 }
