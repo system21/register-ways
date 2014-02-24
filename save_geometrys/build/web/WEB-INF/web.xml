@@ -24,6 +24,14 @@
         <servlet-name>SGeometry</servlet-name>
         <servlet-class>servlets.SGeometry</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SManzanas</servlet-name>
+        <servlet-class>servlets.SManzanas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SConsultar</servlet-name>
+        <servlet-class>servlets.SConsultar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Ssave_polygon</servlet-name>
         <url-pattern>/Ssave_polygon</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>SGeometry</servlet-name>
         <url-pattern>/SGeometry</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SManzanas</servlet-name>
+        <url-pattern>/SManzanas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SConsultar</servlet-name>
+        <url-pattern>/SConsultar</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

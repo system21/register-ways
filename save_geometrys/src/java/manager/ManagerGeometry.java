@@ -6,6 +6,7 @@
 package manager;
 
 import bean.BGeometry;
+import bean.BManzanas;
 import dao.DaoGeometry;
 import datasource.BDConnecion;
 import java.sql.Connection;
@@ -36,6 +37,16 @@ public class ManagerGeometry {
 
         daopolygon.insert_geometry(list);
 
+    }
+
+    public List<BManzanas> get_manzana() {
+        DaoGeometry daopolygon = new DaoGeometry(cn);
+        return daopolygon.get_manzana();
+    }
+
+    public  List<BManzanas> consultar(BGeometry bGeometry) {
+    DaoGeometry daopolygon = new DaoGeometry(cn);
+        return daopolygon.consultar(bGeometry);
     }
 
 }

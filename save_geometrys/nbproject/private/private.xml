@@ -3,8 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/web/index.jsp</file>
-            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/web/newhtml.html</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/web/js/app_manzanas.js</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/src/java/dao/DaoGeometry.java</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/web/js/app.js</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/src/java/servlets/SGeometry.java</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/web/css/style.css</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/src/java/servlets/SManzanas.java</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/src/java/manager/ManagerGeometry.java</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/web/index_consultar.jsp</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/src/java/servlets/SConsultar.java</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/web/js/app_consultar.js</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/web/manzanas.jsp</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/web/css/style_consultar.css</file>
+            <file>file:/home/ruben/Dropbox/system21/register-ways/save_geometrys/src/java/bean/BManzanas.java</file>
         </group>
     </open-files>
 </project-private>

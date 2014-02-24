@@ -4,16 +4,18 @@ var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D7597
         }),
 map = new L.Map('map', {
     layers: [cloudmade],
-    center: new L.LatLng(-13.7772, -74.2756),
-    zoom: 8
+    center: new L.LatLng(-9.49719531412241, -77.5372011697607),
+    zoom: 14
 });
+
+
 
 var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
 
 var layer_to_safe = [];
 var bloque = 0;
-// Set the title to show on the polygon button
+
 L.drawLocal.draw.toolbar.buttons.polygon = 'Draw a sexy polygon!';
 
 var drawControl = new L.Control.Draw({
@@ -156,9 +158,7 @@ function save_object(type, layer) {
 
 
     } else if (type === 'circle') {
-        /* console.log(layer._getLngRadius());
-         console.log(layer.toGeoJSON().geometry);
-         */
+    
         $('#circle').append('<div class="well" id="b' + bloque + '"></div>');
         var circle = layer.toGeoJSON().geometry.coordinates[0] + ' ' + layer.toGeoJSON().geometry.coordinates[1] + '/' + layer._getLngRadius();
         //console.log(circle);
@@ -176,7 +176,7 @@ function save_object(type, layer) {
                 string_cordenadas = string_cordenadas + ',' + cordenadas[key][0] + ' ' + cordenadas[key][1];
             }
 
-            //console.log(string_cordenadas)
+
         });
 
         var polygon = string_cordenadas;
@@ -212,9 +212,5 @@ function save_object(type, layer) {
 ;
 
 $(document).on('ready', function() {
-    /*
-     $("#cancelar").click(function (){
-     
-     });
-     */
+
 });

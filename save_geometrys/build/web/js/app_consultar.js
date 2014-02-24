@@ -154,16 +154,18 @@ function save_object(type, layer) {
         $('#b' + bloque).append('<input type="text" name="tipo_geometry' + bloque + '" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + rectangle + '"   readonly>')
         bloque = bloque + 1;
 
-
+        call_servlet(rectangle, type);
 
 
     } else if (type === 'circle') {
-    
+
         $('#circle').append('<div class="well" id="b' + bloque + '"></div>');
         var circle = layer.toGeoJSON().geometry.coordinates[0] + ' ' + layer.toGeoJSON().geometry.coordinates[1] + '/' + layer._getLngRadius();
         //console.log(circle);
         $('#b' + bloque).append('<input type="text" name="tipo_geometry' + bloque + '" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + circle + '"   readonly>')
         bloque = bloque + 1;
+        call_servlet(circle, type);
+
     } else if (type === 'polygon') {
         var cordenadas = layer.toGeoJSON().geometry.coordinates[0];
         $('#polygon').append('<div class="well" id="b' + bloque + '"></div>');
@@ -182,7 +184,7 @@ function save_object(type, layer) {
         var polygon = string_cordenadas;
         $('#b' + bloque).append('<input type="text" name="tipo_geometry' + bloque + '" value="' + type + '" >' + '<input type="text" name="geometry' + bloque + '" value="' + polygon + '"   readonly>')
         bloque = bloque + 1;
-
+        call_servlet(polygon, type);
     } else if (type === 'polyline') {
 
         $('#polyline').append('<div class="well" id="b' + bloque + '"></div>');
@@ -208,6 +210,57 @@ function save_object(type, layer) {
     $("#num_objects_label").text(bloque);
     $("#num_objects").val(bloque);
     console.log('Objeto creado:' + layer.options.id);
+}
+;
+
+
+function call_servlet(geom, type) {
+
+//$('.result').css('display','block');
+
+
+    $('#objects_table_result').empty();
+
+    $.get('SConsultar', {geom: geom, type: type}, function(data) {
+        //$('#welcometext').text(responseText);
+        //console.log(data);
+        var nombdist;
+        var estrato;
+
+        $.each(data, function(key, value) {
+//gid: 533, idmanzana: "02010100800024", nombdist: "HUARAZ", : "3"
+
+
+            if (value.nombdist === null) {
+                nombdist = '<td> null </td>';
+
+            } else {
+                nombdist = '<td>' + value.nombdist + '</td>';
+            }
+            if (value.estrato === null) {
+                estrato = '<td> null </td>';
+            } else {
+                estrato = '<td>' + value.estrato + '</td>';
+
+            }
+            console.log(value);
+            $('#objects_table_result').append('<tr><td> ' + key + ' </td><td>' + value.idmanzana + '</td>' + nombdist + estrato + '</tr>')
+        });
+
+
+    });
+
+
+
+}
+;
+
+function check_null(k) {
+    if (k.replace(/\s/g, "") + String.fromCharCode(160) != String.fromCharCode(160)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 ;
 
